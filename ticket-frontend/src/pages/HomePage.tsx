@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { Plus } from 'lucide-react'
 import { Ticket } from '@/types'
-import { Button } from '@/components/ui/Button'
-import { Card, CardContent } from '@/components/ui/Card'
-import { TicketCard } from '@/components/TicketCard'
-import { TicketForm } from '@/components/TicketForm'
-import { AdvancedSearch } from '@/components/AdvancedSearch'
-import { useTicketStore } from '@/stores/ticketStore'
+import { Button } from '@/components/ui'
+import { Card, CardContent } from '@/components/ui'
+import { TicketCard } from '@/components/tickets'
+import { TicketForm } from '@/components/tickets'
+import { AdvancedSearch } from '@/components/common'
+import { useTicketStore, useTagStore } from '@/stores'
 import toast from 'react-hot-toast'
 
 export function HomePage() {
@@ -21,16 +21,19 @@ export function HomePage() {
 
   const {
     tickets,
-    tags,
     loading,
     error,
     fetchTickets,
-    fetchTags,
     createTicket,
     updateTicketApi,
     deleteTicket,
     clearError,
   } = useTicketStore()
+
+  const {
+    tags,
+    fetchTags,
+  } = useTagStore()
 
   useEffect(() => {
     const loadData = async () => {

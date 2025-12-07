@@ -4,7 +4,7 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
-export function Layout({ children }: LayoutProps) {
+function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -14,3 +14,5 @@ export function Layout({ children }: LayoutProps) {
     </div>
   )
 }
+
+export { Layout }

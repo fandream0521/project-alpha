@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Plus, Edit2, Trash2, Tag as TagIcon } from 'lucide-react'
 import { Tag } from '@/types'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Tag as TagComponent } from '@/components/Tag'
-import { useTicketStore } from '@/stores/ticketStore'
+import { Button } from '@/components/ui'
+import { Input } from '@/components/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
+import { Tag as TagComponent } from '@/components/tags'
+import { useTagStore, useTicketStore } from '@/stores'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
 
@@ -24,7 +24,7 @@ export function TagManagePage() {
     color: PRESET_COLORS[0],
   })
 
-  const { tags, loading, fetchTags, createTag, deleteTag } = useTicketStore()
+  const { tags, loading, fetchTags, createTag, deleteTag } = useTagStore()
 
   useEffect(() => {
     fetchTags()

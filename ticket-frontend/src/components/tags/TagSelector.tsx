@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Tag } from '@/components/Tag'
+import { Tag } from './Tag'
 import { ChevronDown } from 'lucide-react'
-import { useTicketStore } from '@/stores/ticketStore'
+import { useTagStore } from '@/stores'
 import { cn } from '@/lib/utils'
 
 interface TagSelectorProps {

@@ -1,9 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { Layout } from '@/components/Layout'
-import { HomePage } from '@/pages/HomePage'
-import { TagManagePage } from '@/pages/TagManagePage'
+import { Layout } from '@/components/layout'
+import { HomePage } from '@/pages'
+import { TagManagePage } from '@/pages'
 
 const queryClient = new QueryClient({
   defaultOptions: {

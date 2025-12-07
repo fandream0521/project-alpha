@@ -178,4 +178,3 @@ const TicketCard = memo(({ ticket, onEdit, onDelete, onToggleStatus }: TicketCar
 TicketCard.displayName = 'TicketCard'
 
 export { TicketCard }
-export default TicketCard

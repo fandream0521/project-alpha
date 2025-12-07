@@ -1,56 +1,13 @@
-export interface Ticket {
-  id: string
-  title: string
-  description?: string
-  priority: Priority
-  status: TicketStatus
-  created_at: string
-  updated_at: string
-  tags?: Tag[]
-}
+// Export all types
+export type { Ticket, Priority, TicketStatus, CreateTicketRequest, UpdateTicketRequest, TicketFilters, TicketListResponse } from './ticket'
+export type { Tag, CreateTagRequest, UpdateTagRequest } from './tag'
+export type { ApiResponse, ApiError, PaginationParams, PaginationResponse } from './api'
+export type { BaseComponentProps, ButtonProps, InputProps, TextareaProps, CardProps, BadgeProps } from './ui'
 
-export interface Tag {
-  id: string
-  name: string
-  color?: string
-  created_at: string
-  updated_at: string
-}
-
-export type Priority = 'low' | 'medium' | 'high' | 'urgent'
-export type TicketStatus = 'open' | 'in_progress' | 'resolved'
-
-export interface CreateTicketRequest {
-  title: string
-  description?: string
-  priority?: Priority
-  status?: TicketStatus
-  tag_ids?: string[]
-}
-
-export interface UpdateTicketRequest {
-  title?: string
-  description?: string
-  priority?: Priority
-  status?: TicketStatus
-  tag_ids?: string[]
-}
-
-export interface CreateTagRequest {
-  name: string
-  color?: string
-}
-
-export interface UpdateTagRequest {
-  name?: string
-  color?: string
-}
-
-export interface ApiResponse<T> {
-  data: T
-}
-
-export interface ApiError {
-  message: string
-  status: number
-}
+// Re-export for backward compatibility
+export type {
+  Ticket as TicketType,
+  Tag as TagType,
+  Priority as TicketPriority,
+  TicketStatus as TicketStatusEnum,
+} from './ticket'
