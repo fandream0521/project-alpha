@@ -21,16 +21,18 @@ interface AdvancedSearchProps {
 
 const STATUS_OPTIONS = [
   { value: '', label: '全部状态' },
-  { value: 'Todo', label: '待办' },
-  { value: 'InProgress', label: '进行中' },
-  { value: 'Done', label: '已完成' }
+  { value: 'open', label: '待办' },
+  { value: 'in_progress', label: '进行中' },
+  { value: 'resolved', label: '已解决' },
+  { value: 'closed', label: '已关闭' }
 ]
 
 const PRIORITY_OPTIONS = [
   { value: '', label: '全部优先级' },
-  { value: 'High', label: '高' },
-  { value: 'Medium', label: '中' },
-  { value: 'Low', label: '低' }
+  { value: 'urgent', label: '紧急' },
+  { value: 'high', label: '高' },
+  { value: 'medium', label: '中' },
+  { value: 'low', label: '低' }
 ]
 
 export function AdvancedSearch({ tags, onFiltersChange, loading = false }: AdvancedSearchProps) {
@@ -61,6 +63,7 @@ export function AdvancedSearch({ tags, onFiltersChange, loading = false }: Advan
 
   // 处理状态变化
   const handleStatusChange = (value: string) => {
+    console.log('状态变化:', value)
     const newFilters = { ...filters, status: value }
     setFilters(newFilters)
     onFiltersChange(newFilters)
@@ -68,6 +71,7 @@ export function AdvancedSearch({ tags, onFiltersChange, loading = false }: Advan
 
   // 处理优先级变化
   const handlePriorityChange = (value: string) => {
+    console.log('优先级变化:', value)
     const newFilters = { ...filters, priority: value }
     setFilters(newFilters)
     onFiltersChange(newFilters)

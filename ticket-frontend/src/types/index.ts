@@ -25,7 +25,7 @@ export interface CreateTicketRequest {
   description?: string
   priority?: Priority
   status?: TicketStatus
-  tagIds?: string[]
+  tag_ids?: string[]
 }
 
 export interface UpdateTicketRequest {
@@ -33,7 +33,7 @@ export interface UpdateTicketRequest {
   description?: string
   priority?: Priority
   status?: TicketStatus
-  tagIds?: string[]
+  tag_ids?: string[]
 }
 
 export interface CreateTagRequest {

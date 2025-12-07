@@ -71,7 +71,7 @@ export const ticketApi = {
     if (filters?.limit) params.append('limit', filters.limit.toString())
 
     const url = `/api/v1/tickets${params.toString() ? `?${params.toString()}` : ''}`
-    const response = await api.get<ApiResponse<Ticket[]>>(url)
+    const response = await api.get<{data: Ticket[], total: number, limit: number, page: number}>(url)
     return response.data.data
   },
 
@@ -83,8 +83,8 @@ export const ticketApi = {
 
   // Create ticket
   create: async (data: CreateTicketRequest): Promise<Ticket> => {
-    const response = await api.post<ApiResponse<Ticket>>('/api/v1/tickets', data)
-    return response.data.data
+    const response = await api.post<Ticket>('/api/v1/tickets', data)
+    return response.data
   },
 
   // Update ticket
@@ -112,7 +112,7 @@ export const ticketApi = {
 export const tagApi = {
   // Get all tags
   getAll: async (): Promise<Tag[]> => {
-    const response = await api.get<ApiResponse<Tag[]>>('/api/v1/tags')
+    const response = await api.get<{data: Tag[], total: number}>('/api/v1/tags')
     return response.data.data
   },
 
@@ -124,8 +124,8 @@ export const tagApi = {
 
   // Create tag
   create: async (data: CreateTagRequest): Promise<Tag> => {
-    const response = await api.post<ApiResponse<Tag>>('/api/v1/tags', data)
-    return response.data.data
+    const response = await api.post<Tag>('/api/v1/tags', data)
+    return response.data
   },
 
   // Update tag

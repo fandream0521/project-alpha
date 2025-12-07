@@ -108,6 +108,7 @@ export const useTicketStore = create<TicketState>()(
         try {
           set({ loading: true, error: null }, false, 'fetchTickets-start')
           const tickets = await ticketApi.getAll()
+          console.log('Fetched tickets:', tickets)
           // Transform backend status values to frontend expected values
           // Use backend values directly since frontend components now expect backend format
           const transformedTickets = tickets
@@ -134,9 +135,11 @@ export const useTicketStore = create<TicketState>()(
       createTicket: async (data) => {
         try {
           set({ loading: true, error: null }, false, 'createTicket-start')
+          console.log('Store createTicket, input data:', data)
           // Frontend and backend now use the same values, no transformation needed
           const backendData = data
           const newTicket = await ticketApi.create(backendData)
+          console.log('Store createTicket, created ticket:', newTicket)
           // Transform backend response to frontend format
           // Use backend values directly since frontend components now expect backend format
           const transformedTicket = newTicket

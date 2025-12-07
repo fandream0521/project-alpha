@@ -62,9 +62,13 @@ impl TicketRepository {
 
         // 如果有标签，关联标签
         if let Some(tag_ids) = &request.tag_ids {
+            println!("DEBUG: Creating ticket {} with {} tags: {:?}", ticket.id, tag_ids.len(), tag_ids);
             if !tag_ids.is_empty() {
                 self.associate_tags(ticket.id, tag_ids).await?;
+                println!("DEBUG: Tags associated successfully");
             }
+        } else {
+            println!("DEBUG: No tags provided for ticket {}", ticket.id);
         }
 
         Ok(ticket)

@@ -118,11 +118,53 @@ export function HomePage() {
     done: tickets.filter(t => t.status === 'resolved').length,
   }), [tickets])
 
+  // 根据搜索过滤器筛选tickets
+  const filteredTickets = useMemo(() => {
+    console.log('筛选tickets，总数:', tickets.length, '筛选条件:', searchFilters)
+
+    const filtered = tickets.filter((ticket) => {
+      // 搜索关键词筛选
+      if (searchFilters.search) {
+        const searchLower = searchFilters.search.toLowerCase()
+        if (!ticket.title.toLowerCase().includes(searchLower) &&
+            !ticket.description?.toLowerCase().includes(searchLower)) {
+          return false
+        }
+      }
+
+      // 状态筛选
+      if (searchFilters.status && ticket.status !== searchFilters.status) {
+        console.log(`状态筛选失败: ticket.status=${ticket.status}, filter=${searchFilters.status}`)
+        return false
+      }
+
+      // 优先级筛选
+      if (searchFilters.priority && ticket.priority !== searchFilters.priority) {
+        console.log(`优先级筛选失败: ticket.priority=${ticket.priority}, filter=${searchFilters.priority}`)
+        return false
+      }
+
+      // 标签筛选
+      if (searchFilters.tagIds.length > 0) {
+        const ticketTagIds = ticket.tags?.map(tag => tag.id) || []
+        const hasMatchingTag = searchFilters.tagIds.some(tagId => ticketTagIds.includes(tagId))
+        if (!hasMatchingTag) {
+          console.log(`标签筛选失败: ticket标签=${ticketTagIds}, 筛选标签=${searchFilters.tagIds}`)
+          return false
+        }
+      }
+
+      return true
+    })
+
+    console.log('筛选后数量:', filtered.length)
+    return filtered
+  }, [tickets, searchFilters])
+
   // 处理搜索过滤器变化
   const handleFiltersChange = useCallback((filters: typeof searchFilters) => {
+    console.log('HomePage接收到筛选器变化:', filters)
     setSearchFilters(filters)
-    // 这里可以触发API重新获取数据，或者使用现有数据进行过滤
-    // 暂时使用现有数据进行前端过滤演示
   }, [])
 
   return (
@@ -187,16 +229,16 @@ export function HomePage() {
         {/* Ticket List */}
         {!loading && (
           <div className="space-y-4">
-            {tickets.length === 0 ? (
+            {filteredTickets.length === 0 ? (
               <Card>
                 <CardContent className="text-center py-12">
                   <p className="text-muted-foreground">
-                    还没有Tickets，创建一个吧！
+                    {tickets.length === 0 ? '还没有Tickets，创建一个吧！' : '没有找到符合条件的Tickets'}
                   </p>
                 </CardContent>
               </Card>
             ) : (
-              tickets.map((ticket) => (
+              filteredTickets.map((ticket) => (
                 <TicketCard
                   key={ticket.id}
                   ticket={ticket}

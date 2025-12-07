@@ -61,7 +61,11 @@ async fn main() {
         .layer(Extension(pool));
 
     // 绑定地址
-    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
+    let port: u16 = env::var("PORT")
+        .unwrap_or_else(|_| "3000".to_string())
+        .parse()
+        .unwrap_or(3000);
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
 
     tracing::info!("Starting server on {}", addr);
 

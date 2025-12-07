@@ -60,8 +60,9 @@ export function TicketForm({ ticket, onSubmit, onCancel, loading = false }: Tick
     try {
       const submitData = {
         ...data,
-        tagIds: selectedTags.length > 0 ? selectedTags : undefined,
+        tag_ids: selectedTags.length > 0 ? selectedTags : undefined,
       }
+      console.log('TicketForm提交数据:', submitData)
       await onSubmit(submitData)
       if (!ticket) {
         reset()

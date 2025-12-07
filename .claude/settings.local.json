@@ -30,7 +30,12 @@
       "Bash(cargo fmt:*)",
       "Bash(cmd /c \"for /f \"\"tokens=2\"\" %i in (''tasklist /fi \"\"imagename eq node.exe\"\" /fo csv ^| findstr /v \"\"INFO\"\"'') do taskkill /pid %i /f\")",
       "Bash(cmd:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(cargo clean:*)",
+      "Bash(dir:*)",
+      "Bash(kill:*)",
+      "Bash(cat:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []
