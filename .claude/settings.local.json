@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(psql:*)",
+      "Bash(echo:*)",
+      "Bash(chcp:*)",
+      "Bash(./test.sh:*)",
+      "Bash(./scripts/test.sh)",
+      "Bash(cargo check:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo run:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(npm create:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev)",
+      "Bash(npm run build:*)",
+      "Bash(del:*)",
+      "Bash(RUST_LOG=debug cargo run:*)",
+      "Bash(tasklist:*)",
+      "Bash(taskkill:*)",
+      "Bash(cmd /c \"taskkill /F /PID 4324\")",
+      "Bash(cd:*)",
+      "Bash(node:*)",
+      "Bash(cargo clippy:*)",
+      "Bash(cargo audit:*)",
+      "Bash(cargo fmt:*)",
+      "Bash(cmd /c \"for /f \"\"tokens=2\"\" %i in (''tasklist /fi \"\"imagename eq node.exe\"\" /fo csv ^| findstr /v \"\"INFO\"\"'') do taskkill /pid %i /f\")",
+      "Bash(cmd:*)",
+      "Bash(powershell:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

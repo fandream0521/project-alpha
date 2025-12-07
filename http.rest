@@ -1,0 +1,319 @@
+### Ticket管理系统API测试文件
+### 使用方法：在VS Code中安装REST Client扩展，然后点击每个请求上方的"Send Request"
+
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### 1. 健康检查
+GET {{baseUrl}}/health
+
+###
+
+### 2. 数据库统计
+GET {{baseUrl}}/api/db/stats
+
+###
+
+### 3. 标签相关API测试
+
+#### 3.1 获取所有标签
+GET {{baseUrl}}/api/v1/tags
+
+###
+
+#### 3.2 创建新标签（仅名称）
+POST {{baseUrl}}/api/v1/tags
+Content-Type: {{contentType}}
+
+{
+  "name": "重要"
+}
+
+###
+
+#### 3.3 创建新标签（完整信息）
+POST {{baseUrl}}/api/v1/tags
+Content-Type: {{contentType}}
+
+{
+  "name": "Bug",
+  "color": "#EF4444"
+}
+
+###
+
+#### 3.4 创建标签（无效数据 - 错误测试）
+POST {{baseUrl}}/api/v1/tags
+Content-Type: {{contentType}}
+
+{
+  "name": ""
+}
+
+###
+
+### 动态变量：存储创建的标签ID（需要手动替换）
+@tagId = 00000000-0000-0000-0000-000000000000
+
+#### 3.5 获取单个标签详情
+GET {{baseUrl}}/api/v1/tags/{{tagId}}
+
+###
+
+#### 3.6 获取不存在的标签（404测试）
+GET {{baseUrl}}/api/v1/tags/99999999-9999-9999-9999-999999999999
+
+###
+
+#### 3.7 更新标签（仅名称）
+PUT {{baseUrl}}/api/v1/tags/{{tagId}}
+Content-Type: {{contentType}}
+
+{
+  "name": "紧急"
+}
+
+###
+
+#### 3.8 更新标签（完整更新）
+PUT {{baseUrl}}/api/v1/tags/{{tagId}}
+Content-Type: {{contentType}}
+
+{
+  "name": "功能",
+  "color": "#10B981"
+}
+
+###
+
+#### 3.9 删除标签
+DELETE {{baseUrl}}/api/v1/tags/{{tagId}}
+
+###
+
+#### 3.10 删除不存在的标签
+DELETE {{baseUrl}}/api/v1/tags/99999999-9999-9999-9999-999999999999
+
+###
+
+### 4. 工单相关API测试
+
+#### 4.1 获取所有工单（基础）
+GET {{baseUrl}}/api/v1/tickets
+
+###
+
+#### 4.2 获取所有工单（排序）
+GET {{baseUrl}}/api/v1/tickets
+
+###
+
+#### 4.3 创建新工单（仅标题）
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "测试Ticket - REST Client创建"
+}
+
+###
+
+#### 4.4 创建新工单（完整信息）
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "功能开发任务",
+  "description": "实现用户登录功能，包括JWT认证和权限管理",
+  "priority": "High"
+}
+
+###
+
+#### 4.5 创建工单（空标题 - 错误测试）
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": ""
+}
+
+###
+
+### 动态变量：存储创建的工单ID（需要手动替换）
+@ticketId = 00000000-0000-0000-0000-000000000000
+
+#### 4.6 获取单个工单详情
+GET {{baseUrl}}/api/v1/tickets/{{ticketId}}
+
+###
+
+#### 4.7 获取不存在的工单（404测试）
+GET {{baseUrl}}/api/v1/tickets/99999999-9999-9999-9999-999999999999
+
+###
+
+#### 4.8 更新工单（仅标题）
+PUT {{baseUrl}}/api/v1/tickets/{{ticketId}}
+Content-Type: {{contentType}}
+
+{
+  "title": "更新后的标题"
+}
+
+###
+
+#### 4.9 更新工单（完整更新）
+PUT {{baseUrl}}/api/v1/tickets/{{ticketId}}
+Content-Type: {{contentType}}
+
+{
+  "title": "完整更新的工单",
+  "description": "这是更新后的描述信息"
+}
+
+###
+
+#### 4.10 更新工单状态为进行中
+PUT {{baseUrl}}/api/v1/tickets/{{ticketId}}
+Content-Type: {{contentType}}
+
+{
+  "title": "进行中的任务",
+  "description": "任务正在进行中"
+}
+
+###
+
+#### 4.11 更新工单状态为已完成
+PUT {{baseUrl}}/api/v1/tickets/{{ticketId}}
+Content-Type: {{contentType}}
+
+{
+  "title": "已完成的任务",
+  "description": "任务已经完成"
+}
+
+###
+
+#### 4.12 删除工单
+DELETE {{baseUrl}}/api/v1/tickets/{{ticketId}}
+
+###
+
+#### 4.13 删除不存在的工单
+DELETE {{baseUrl}}/api/v1/tickets/99999999-9999-9999-9999-999999999999
+
+###
+
+### 5. 边界测试
+
+#### 5.1 大标题测试
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "这是一个非常非常长的标题，用于测试系统对长文本的处理能力，正常情况下应该能够正常处理但可能会有长度限制，这是一个非常非常长的标题，用于测试系统对长文本的处理能力",
+  "description": "测试边界情况"
+}
+
+###
+
+#### 5.2 特殊字符测试
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "测试特殊字符 !@#$%^&*()_+-=[]{}|;':\",./<>?",
+  "description": "描述包含特殊字符：中文、English、123、!@#$%"
+}
+
+###
+
+#### 5.3 空标题错误测试
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "",
+  "description": "空标题应该返回错误"
+}
+
+###
+
+### 6. 错误处理测试
+
+#### 6.1 无效的JSON格式
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "测试",
+  "description": "无效JSON
+}
+
+###
+
+#### 6.2 缺少必需字段
+POST {{baseUrl}}/api/v1/tickets
+Content-Type: {{contentType}}
+
+{
+  "description": "缺少title字段"
+}
+
+###
+
+### 7. 数据验证测试
+
+#### 7.1 标签名称过长测试
+POST {{baseUrl}}/api/v1/tags
+Content-Type: {{contentType}}
+
+{
+  "name": "这是一个非常非常长的标签名称，超过了系统允许的最大长度限制，用于测试数据验证功能",
+  "color": "#FF5722"
+}
+
+###
+
+#### 7.2 无效的颜色格式测试
+POST {{baseUrl}}/api/v1/tags
+Content-Type: {{contentType}}
+
+{
+  "name": "测试标签",
+  "color": "invalid-color"
+}
+
+###
+
+### 8. 测试说明
+
+#### 8.1 如何使用
+1. 在VS Code中安装 "REST Client" 扩展
+2. 打开此文件
+3. 点击每个请求上方的 "Send Request" 链接
+4. 查看响应结果
+
+#### 8.2 测试步骤建议
+1. 先运行健康检查确保服务正常
+2. 测试标签的CRUD操作
+3. 测试工单的CRUD操作
+4. 测试错误处理
+5. 测试边界情况
+
+#### 8.3 注意事项
+- 请手动替换 `@tagId` 和 `@ticketId` 为实际的ID值
+- 某些测试可能需要先执行前置步骤（如先创建标签再更新）
+- 错误测试用例预期会返回错误状态码
+- 请确保后端服务正在运行在 `http://localhost:3000`
+
+#### 8.4 预期响应格式
+成功响应：
+- 状态码：200 OK, 201 Created, 204 No Content
+- 响应体：JSON格式
+
+错误响应：
+- 状态码：400 Bad Request, 404 Not Found, 500 Internal Server Error
+- 响应体：`{"error": {"message": "错误描述", "status": 状态码}}`
